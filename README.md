@@ -106,9 +106,9 @@ calendario=/.well-known/calendario
 Calendario Protocol is open source under the MIT License. Contributions welcome.
 
 ## 📚 Resources
-- [Spec (HTML)](https://calendario.dev/spec.html)
-- [Example JSON Profile](https://calendario.dev/.well-known/calendario/jane)
-- [Schema Definition](./calendario-schema-v0.1.json)
+- [Spec (HTML)](./spec-v0.1.html)
+- [Example JSON Profile](./sample.html)
+- [Schema Definition](./schema-v0.1.json)
 - [Validator Script](./validator.py)
 - [Live Hosted Demo](https://calendario.dev/demo)
 
