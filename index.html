@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calendario Protocol</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f9f9fb;
+      color: #212529;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+    }
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+    }
+    header {
+      padding: 6rem 0 4rem;
+      text-align: center;
+      background: #fff;
+      border-bottom: 1px solid #dee2e6;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: "";
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle at center, #e2e6f2 0%, transparent 80%);
+      z-index: 0;
+    }
+    header > * {
+      position: relative;
+      z-index: 1;
+    }
+    .lead {
+      font-size: 1.25rem;
+      color: #6c757d;
+    }
+    .btn-primary, .btn-outline-secondary {
+      border-radius: 30px;
+      padding: 0.6rem 1.4rem;
+      transition: all 0.2s ease-in-out;
+    }
+    .btn-primary:hover, .btn-outline-secondary:hover {
+      transform: translateY(-2px);
+    }
+    .section {
+      padding: 4rem 0;
+    }
+    .section h2 {
+      text-align: center;
+    }
+    .icon-feature {
+      background: #ffffff;
+      border-radius: 0.75rem;
+      padding: 2rem;
+      height: 100%;
+      border: 1px solid #e3e6eb;
+      transition: all 0.3s ease-in-out;
+    }
+    .icon-feature:hover {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      transform: scale(1.02);
+    }
+    .icon-feature i {
+      font-size: 1.5rem;
+      color: #0d6efd;
+    }
+    .code-block {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      overflow-x: auto;
+    }
+    pre code {
+      color: #212529;
+    }
+    footer {
+      background: #f8f9fa;
+      color: #6c757d;
+      padding: 3rem 0;
+      border-top: 1px solid #dee2e6;
+    }
+    .testimonial {
+      background: #fff;
+      border-left: 4px solid #0d6efd;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0;
+      border-radius: 0.5rem;
+      font-style: italic;
+      color: #495057;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-light bg-white border-bottom px-4 shadow-sm">
+    <a class="navbar-brand fw-bold" href="#"><i class="fas fa-calendar me-2"></i>Calendario Protocol</a>
+    <div>
+      <a href="#" class="btn btn-outline-secondary me-2">Read the Spec</a>
+      <a href="https://github.com/calendario-protocol" class="btn btn-primary">Star on GitHub</a>
+    </div>
+  </nav>
+
+  <header data-aos="fade-up">
+    <h1 class="display-5 fw-bold">Make Human Time Resolvable</h1>
+    <p class="lead">Calendario is an open protocol to declare and discover availability across the internet.</p>
+    <div class="mt-4">
+      <a href="#" class="btn btn-primary me-2">Explore Spec</a>
+      <a href="#" class="btn btn-outline-secondary disabled">Submit Profile (Coming Soon)</a>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="mb-4" data-aos="fade-up">What Is Calendario?</h2>
+      <p class="mb-4">Calendario is a decentralized, federated protocol that lets anyone publish their availability, preferences, pricing, and booking endpoints via a simple <code>.well-known</code> JSON file. Think of it as a DNS for time — declarative, resolvable, and universally linkable.</p>
+      <div class="row g-4">
+        <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+          <div class="icon-feature text-center">
+            <i class="fas fa-clock mb-2"></i>
+            <p>When you're available</p>
+          </div>
+        </div>
+        <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+          <div class="icon-feature text-center">
+            <i class="fas fa-envelope mb-2"></i>
+            <p>How booking requests can be submitted</p>
+          </div>
+        </div>
+        <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+          <div class="icon-feature text-center">
+            <i class="fas fa-dollar-sign mb-2"></i>
+            <p>What it costs, and how to pay</p>
+          </div>
+        </div>
+        <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+          <div class="icon-feature text-center">
+            <i class="fas fa-link mb-2"></i>
+            <p>Where to confirm availability</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="mb-4">Why It Matters</h2>
+      <ul>
+        <li>No vendor lock-in — any domain can publish, any agent can resolve.</li>
+        <li>No scraping or guessing — structured, intentional, human-readable.</li>
+        <li>Built for the future — agent-ready, decentralized, and open-spec.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="mb-4">How It Works</h2>
+      <p>Host a JSON file at: <code>https://yourdomain.com/.well-known/calendario/yourname.json</code></p>
+      <ul>
+        <li>Declare availability, time zone, booking, and pricing logic</li>
+        <li>Include optional organization/identity proofs</li>
+        <li>Share your ID (e.g., <code>@jane@yourdomain.com</code>)</li>
+        <li>Let others resolve it intelligently</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="mb-4">Sample JSON (v0.1)</h2>
+      <div class="code-block">
+        <pre><code>{
+  "version": "0.1",
+  "username": "jane",
+  "display_name": "Jane Doe",
+  "timezone": "America/New_York",
+  "min_notice_hours": 72,
+  "max_bookings_per_day": 3,
+  "blackouts": [
+    "2025-12-01",
+    { "start": "2025-12-24", "end": "2025-12-31" }
+  ],
+  "scheduling": [
+    {
+      "type": "weekly",
+      "days": ["monday", "wednesday", "friday"],
+      "hours": ["09:00-11:00", "16:00-18:00"],
+      "expires": "2025-06-30"
+    }
+  ],
+  "visibility": "public",
+  "allow_anonymous_booking": false,
+  "meeting_response_url": "https://yourdomain.com/api/bookings/jane",
+  "static_meeting_url": "https://meet.google.com/abc-defg-hij",
+  "free_busy_url": "https://yourdomain.com/api/freebusy/jane",
+  "pricing": {
+    "hour": 75,
+    "half_hour": 45,
+    "currency": "USD"
+  },
+  "payment_required": true,
+  "payment_url": "https://yourdomain.com/pay/jane",
+  "confirmation_message": "Thank you for booking with Jane. Please bring your brief and join the call 5 mins early.",
+  "no_show_policy_url": "https://yourdomain.com/no-show",
+  "terms_url": "https://yourdomain.com/terms",
+  "privacy_url": "https://yourdomain.com/privacy"
+}</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="mb-4">Who It’s For</h2>
+      <ul class="list-unstyled">
+        <li>Apps & Agents — Resolve human availability directly</li>
+        <li>People — Control how you share your time</li>
+        <li>Developers — Add AI-friendly scheduling to any stack</li>
+        <li>SaaS — Native publishing with zero lock-in</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="mb-4">What People Are Saying</h2>
+      <div class="testimonial" data-aos="fade-up">“Calendario is exactly what we needed. No more scraping calendars — just clean, resolvable availability.” — CTO at OpenAgent</div>
+      <div class="testimonial" data-aos="fade-up" data-aos-delay="100">“This is what the future of scheduling looks like. Simple, elegant, and truly open.” — Product Lead at FlexiTime</div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container text-center">
+      <h2 class="text-dark">Ready to Join?</h2>
+      <p class="mb-3">Calendario is maintained by RCloud Labs and the open protocol community.</p>
+      <ul class="list-inline">
+        <li class="list-inline-item"><a href="https://github.com/calendario-protocol">⭐ GitHub</a></li>
+        <li class="list-inline-item">📊 Spec</li>
+        <li class="list-inline-item">🔄 Submit</li>
+        <li class="list-inline-item">💬 Discord</li>
+      </ul>
+      <p class="small mt-3">© 2025 Calendario Protocol</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>AOS.init({ duration: 700, once: true });</script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Calendario Profile",
+  "type": "object",
+  "required": [
+    "version",
+    "username",
+    "display_name",
+    "self",
+    "self_proof",
+    "timezone",
+    "visibility",
+    "allow_anonymous_booking",
+    "scheduling",
+    "response_channel"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "username": {
+      "type": "string"
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "self": {
+      "type": "string"
+    },
+    "self_proof": {
+      "type": "object",
+      "required": [
+        "type",
+        "created",
+        "proofPurpose",
+        "verificationMethod",
+        "jws"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "proofPurpose": {
+          "type": "string"
+        },
+        "verificationMethod": {
+          "type": "string"
+        },
+        "jws": {
+          "type": "string"
+        }
+      }
+    },
+    "organization": {
+      "type": "string"
+    },
+    "organization_proof": {
+      "type": "object",
+      "required": [
+        "type",
+        "created",
+        "proofPurpose",
+        "verificationMethod",
+        "jws"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "proofPurpose": {
+          "type": "string"
+        },
+        "verificationMethod": {
+          "type": "string"
+        },
+        "jws": {
+          "type": "string"
+        }
+      }
+    },
+    "representing": {
+      "type": "string"
+    },
+    "representing_proof": {
+      "type": "object",
+      "required": [
+        "type",
+        "created",
+        "proofPurpose",
+        "verificationMethod",
+        "jws"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "proofPurpose": {
+          "type": "string"
+        },
+        "verificationMethod": {
+          "type": "string"
+        },
+        "jws": {
+          "type": "string"
+        }
+      }
+    },
+    "timezone": {
+      "type": "string"
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "public",
+        "private"
+      ]
+    },
+    "allow_anonymous_booking": {
+      "type": "boolean"
+    },
+    "min_notice_hours": {
+      "type": "integer"
+    },
+    "max_bookings_per_day": {
+      "type": "integer"
+    },
+    "blackouts": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "type": "object",
+            "required": [
+              "start",
+              "end"
+            ],
+            "properties": {
+              "start": {
+                "type": "string",
+                "format": "date"
+              },
+              "end": {
+                "type": "string",
+                "format": "date"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "scheduling": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "hours"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "weekly",
+              "date",
+              "range"
+            ]
+          },
+          "days": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "dates": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          "start": {
+            "type": "string",
+            "format": "date"
+          },
+          "end": {
+            "type": "string",
+            "format": "date"
+          },
+          "hours": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^\\d{2}:\\d{2}-\\d{2}:\\d{2}$"
+            }
+          },
+          "expires": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      }
+    },
+    "pricing": {
+      "type": "object",
+      "properties": {
+        "hour": {
+          "type": "number"
+        },
+        "half_hour": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string"
+        }
+      }
+    },
+    "payment_required": {
+      "type": "boolean"
+    },
+    "payment_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "no_show_policy_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "terms_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "privacy_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "response_channel": {
+      "type": "object",
+      "required": [
+        "human_ack_required",
+        "notify",
+        "confirm",
+        "booking_confirmation_message",
+        "booking_error_message"
+      ],
+      "properties": {
+        "human_ack_required": {
+          "type": "boolean"
+        },
+        "notify": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "type",
+              "value"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "email",
+                  "sms",
+                  "push",
+                  "webhook",
+                  "matrix_dm"
+                ]
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "confirm": {
+          "type": "object",
+          "properties": {
+            "meeting_response_url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "static_meeting_url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "free_busy_url": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        },
+        "booking_confirmation_message": {
+          "type": "string"
+        },
+        "booking_error_message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calendario Protocol Spec v0.1</title>
+  <!-- External libraries -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f9f9fb;
+      color: #212529;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+    }
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+    }
+    header {
+      padding: 6rem 0 4rem;
+      text-align: center;
+      background: #fff;
+      border-bottom: 1px solid #dee2e6;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: "";
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle at center, #e2e6f2 0%, transparent 80%);
+      z-index: 0;
+    }
+    header > * {
+      position: relative;
+      z-index: 1;
+    }
+    .lead {
+      font-size: 1.25rem;
+      color: #6c757d;
+    }
+    .btn-primary, .btn-outline-secondary {
+      border-radius: 30px;
+      padding: 0.6rem 1.4rem;
+      transition: all 0.2s ease-in-out;
+    }
+    .btn-primary:hover, .btn-outline-secondary:hover {
+      transform: translateY(-2px);
+    }
+    .section {
+      padding: 4rem 0;
+    }
+    .code-block {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      overflow-x: auto;
+    }
+    pre code {
+      color: #212529;
+    }
+    table {
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-light bg-white border-bottom px-4 shadow-sm">
+    <a class="navbar-brand fw-bold" href="index.html"><i class="fas fa-calendar me-2"></i>Calendario Protocol</a>
+    <div>
+      <a href="index.html" class="btn btn-outline-secondary me-2">Home</a>
+      <span class="btn btn-primary disabled">Spec v0.1</span>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header data-aos="fade-up">
+    <h1 class="display-5 fw-bold">Calendario Protocol v0.1</h1>
+    <p class="lead">Human‑Centric Availability Resolution</p>
+  </header>
+
+  <!-- Overview -->
+  <section class="section">
+    <div class="container" data-aos="fade-up">
+      <h2 class="mb-4">🌐 Overview</h2>
+      <p>Calendario is a federated, identity‑first protocol for resolving a person’s availability. It enables apps, assistants, agents, and software to determine <em>when</em>, <em>how</em>, and under what conditions a human is available — by resolving a structured JSON profile located at:</p>
+      <p><code>/.​well‑known/calendario/{username}</code></p>
+      <p>The protocol only standardizes how a person or organization declares their:</p>
+      <ul>
+        <li>Availability rules</li>
+        <li>Pricing and payment terms</li>
+        <li>Delegated booking rights</li>
+        <li>Identity proofs</li>
+      </ul>
+      <p>Calendario is designed to be:</p>
+      <ul>
+        <li><strong>Federated</strong> — anyone can host their profile</li>
+        <li><strong>Resolvable</strong> — single GET to static or dynamic endpoint</li>
+        <li><strong>Declarative</strong> — publishes intent, not state (no real‑time guarantees)</li>
+        <li><strong>Composable</strong> — usable in apps, bots, browsers, or agents</li>
+        <li><strong>Agent‑friendly</strong> — readable by humans <em>and</em> AIs</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Sample Endpoint & JSON -->
+  <section class="section bg-white">
+    <div class="container" data-aos="fade-up">
+      <h2 class="mb-4">🧩 Sample Endpoint & JSON (v0.1)</h2>
+      <p><strong>GET</strong> <code>https://yourdomain.com/.well-known/calendario/jane</code><br>
+      <strong>Accept:</strong> <code>application/json</code></p>
+      <p><strong>Schema Compliance</strong><br>The JSON profile must conform to <code>calendario-schema-v0.1.json</code> and can be validated using <code>validator.py</code>.</p>
+      <h3 class="h5 mt-4">Canonical Example</h3>
+      <div class="code-block"><pre><code>{
+  "version": "0.1",
+  "username": "jane",
+  "display_name": "Jane Doe",
+  "self": "did:key:xyz...",
+  "self_proof": {
+    "type": "DIDSignature2021",
+    "created": "2025-05-03T17:00:00Z",
+    "proofPurpose": "assertionMethod",
+    "verificationMethod": "did:key:xyz...",
+    "jws": "eyJhbGciOiJFUz..."
+  },
+
+  "organization": "https://acme.example.com",
+  "organization_proof": {
+    "type": "DIDSignature2021",
+    "created": "2025-05-03T18:00:00Z",
+    "proofPurpose": "assertionMethod",
+    "verificationMethod": "did:key:abc123...",
+    "jws": "eyJhbGciOiJFUz..."
+  },
+
+  "representing": "ceo@acme.example.com",
+  "representing_proof": {
+    "type": "DIDSignature2021",
+    "created": "2025-05-03T17:30:00Z",
+    "proofPurpose": "assertionMethod",
+    "verificationMethod": "did:key:xyz123...",
+    "jws": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9..."
+  },
+
+  "timezone": "America/New_York",
+  "visibility": "public",
+  "allow_anonymous_booking": false,
+
+  "min_notice_hours": 72,
+  "max_bookings_per_day": 3,
+  "blackouts": [
+    "2025-12-01",
+    { "start": "2025-12-24", "end": "2025-12-31" }
+  ],
+  "scheduling": [
+    {
+      "type": "weekly",
+      "days": ["monday", "wednesday", "friday"],
+      "hours": ["09:00-11:00", "16:00-18:00"],
+      "expires": "2025-06-30"
+    },
+    {
+      "type": "date",
+      "dates": ["2025-06-07", "2025-06-10"],
+      "hours": ["09:00-11:00"]
+    },
+    {
+      "type": "range",
+      "start": "2025-06-01",
+      "end": "2025-06-14",
+      "days": ["monday", "tuesday", "thursday"],
+      "hours": ["17:00-20:00"]
+    }
+  ],
+
+  "pricing": {
+    "hour": 75,
+    "half_hour": 45,
+    "currency": "USD"
+  },
+  "payment_required": true,
+  "payment_url": "https://yourdomain.com/pay/jane",
+
+  "no_show_policy_url": "https://yourdomain.com/no-show",
+  "terms_url": "https://yourdomain.com/terms",
+  "privacy_url": "https://yourdomain.com/privacy",
+
+  "response_channel": {
+    "human_ack_required": true,
+
+    "notify": [
+      { "type": "email", "value": "jane@example.com" },
+      { "type": "sms", "value": "+14155551234" },
+      { "type": "push", "value": "https://push.jane.dev/inbox" },
+      { "type": "webhook", "value": "https://jane.dev/notify" },
+      { "type": "matrix_dm", "value": "@jane:matrix.org" }
+    ],
+
+    "confirm": {
+      "meeting_response_url": "https://yourdomain.com/api/bookings/jane",
+      "static_meeting_url": "https://meet.google.com/abc-defg-hij",
+      "free_busy_url": "https://yourdomain.com/api/freebusy/jane"
+    },
+
+    "booking_confirmation_message": "Thank you for booking with Jane. Please bring your brief and join the call 5 mins early.",
+    "booking_error_message": "Sorry, I'm no longer available at this time. Please propose another slot."
+  }
+}
+</code></pre></div>
+    </div>
+  </section>
+
+  <!-- Field Reference -->
+  <section class="section">
+    <div class="container" data-aos="fade-up">
+      <h2 class="mb-4">📘 Field Reference (v0.1)</h2>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Field</th>
+              <th>Type</th>
+              <th>Required</th>
+              <th>Description</th>
+              <th>Example / Context</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>version</td><td>string</td><td class="text-center">✅</td><td>Protocol version used</td><td>"0.1" — allows future breaking changes</td></tr>
+            <tr><td>username</td><td>string</td><td class="text-center">✅</td><td>Username component of URL</td><td>"jane"</td></tr>
+            <tr><td>display_name</td><td>string</td><td class="text-center">✅</td><td>Human‑readable name</td><td>"Jane Doe"</td></tr>
+            <tr><td>self</td><td>string</td><td class="text-center">✅</td><td>DID or unique self‑identifier</td><td>"did:key:xyz..."</td></tr>
+            <tr><td>self_proof</td><td>object</td><td class="text-center">✅</td><td>Signature proving identity ownership</td><td>JSON‑LD proof with JWS</td></tr>
+            <tr><td>organization</td><td>string</td><td class="text-center">—</td><td>URL of affiliated organization</td><td>"https://acme.example.com"</td></tr>
+            <tr><td>organization_proof</td><td>object</td><td class="text-center">—</td><td>Proof signed by org key</td><td>Org DID signature</td></tr>
+            <tr><td>representing</td><td>string</td><td class="text-center">—</td><td>Email/DID you act on behalf of</td><td>"ceo@acme.example.com"</td></tr>
+            <tr><td>representing_proof</td><td>object</td><td class="text-center">—</td><td>Signature authorizing representation</td><td>JWS</td></tr>
+            <tr><td>timezone</td><td>string</td><td class="text-center">✅</td><td>IANA time zone</td><td>"America/New_York"</td></tr>
+            <tr><td>visibility</td><td>string</td><td class="text-center">✅</td><td>"public" or "private" profile</td><td>"public"</td></tr>
+            <tr><td>allow_anonymous_booking</td><td>boolean</td><td class="text-center">✅</td><td>Permit unauthenticated bookings</td><td>false</td></tr>
+            <tr><td>min_notice_hours</td><td>integer</td><td class="text-center">—</td><td>Required notice period</td><td>72</td></tr>
+            <tr><td>max_bookings_per_day</td><td>integer</td><td class="text-center">—</td><td>Daily booking limit</td><td>3</td></tr>
+            <tr><td>blackouts</td><td>array</td><td class="text-center">—</td><td>Specific unavailable dates/ranges</td><td>["2025‑12‑01", {start,end}]</td></tr>
+            <tr><td>scheduling</td><td>array</td><td class="text-center">✅</td><td>Availability blocks</td><td>See Scheduling Blocks</td></tr>
+            <tr><td>pricing</td><td>object</td><td class="text-center">—</td><td>Rates & currency</td><td>{"hour":75}</td></tr>
+            <tr><td>payment_required</td><td>boolean</td><td class="text-center">—</td><td>Is pre‑payment mandatory?</td><td>true</td></tr>
+            <tr><td>payment_url</td><td>string</td><td class="text-center">—</td><td>URL to pay</td><td>Stripe link</td></tr>
+            <tr><td>no_show_policy_url</td><td>string</td><td class="text-center">—</td><td>Cancellation / no‑show policy</td><td>Policy page</td></tr>
+            <tr><td>terms_url</td><td>string</td><td class="text-center">—</td><td>Engagement terms</td><td>Terms page</td></tr>
+            <tr><td>privacy_url</td><td>string</td><td class="text-center">—</td><td>Privacy policy</td><td>Privacy page</td></tr>
+            <tr><td>response_channel</td><td>object</td><td class="text-center">✅</td><td>Notification & confirmation config</td><td>See Response Channel</td></tr>
+            <tr><td>meta</td><td>object</td><td class="text-center">—</td><td>Arbitrary tags / hints</td><td>{"x-tags":["founder"]}</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scheduling Blocks -->
+  <section class="section bg-white">
+    <div class="container" data-aos="fade-up">
+      <h2 class="mb-4">📆 Scheduling Blocks</h2>
+      <p>Each item in <code>scheduling</code> defines availability logic.</p>
+      <div class="code-block"><pre><code>{
+  "type": "weekly",
+  "days": ["monday", "wednesday"],
+  "hours": ["09:00-12:00"],
+  "expires": "2025-06-30"
+}</code></pre></div>
+      <p class="mt-3">Types supported:</p>
+      <ul>
+        <li><strong>weekly</strong> — repeat on days of week</li>
+        <li><strong>date</strong> — specific calendar dates</li>
+        <li><strong>range</strong> — continuous span with selected days</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Response Channel -->
+  <section class="section">
+    <div class="container" data-aos="fade-up">
+      <h2 class="mb-4">📬 Response Channel</h2>
+      <div class="code-block"><pre><code>"response_channel": {
+  "human_ack_required": true,
+  "notify": [ ... ],
+  "confirm": { ... },
+  "booking_confirmation_message": "...",
+  "booking_error_message": "..."
+}</code></pre></div>
+      <ul class="mt-3">
+        <li><code>notify</code> — multiple channels (email, sms, push, webhook, matrix_dm)</li>
+        <li><code>confirm.meeting_response_url</code> — <em>POST</em> here to book</li>
+        <li><code>confirm.static_meeting_url</code> — fallback meeting link</li>
+        <li><code>confirm.free_busy_url</code> — <em>GET</em> here to check live conflicts</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Booking Confirmation -->
+  <section class="section bg-white">
+    <div class="container" data-aos="fade-up">
+      <h2 class="mb-4">✅ Booking Confirmation Format</h2>
+      <p><em>POST</em> to <code>meeting_response_url</code>:</p>
+      <div class="code-block"><pre><code>{
+  "status": "confirmed",
+  "meeting_url": "https://meet.google.com/xyz-1234",
+  "start_time": "2025-06-03T14:00:00Z",
+  "duration_minutes": 30,
+  "confirmation_message": "Looking forward to speaking with you!"
+}</code></pre></div>
+      <p class="mt-4">If time is unavailable:</p>
+      <div class="code-block"><pre><code>{
+  "status": "conflict",
+  "reason": "Requested time already booked",
+  "suggested_times": ["2025-06-03T15:00:00Z"],
+  "fallback_meeting_url": "https://meet.google.com/xyz-9999"
+}</code></pre></div>
+    </div>
+  </section>
+
+  <!-- Free Busy -->
+  <section class="section">
+    <div class="container" data-aos="fade-up">
+      <h2 class="mb-4">🧠 Free/Busy Format</h2>
+      <div class="code-block"><pre><code>{
+  "busy": [
+    { "start": "2025-06-03T14:00:00Z", "end": "2025-06-03T14:30:00Z" }
+  ],
+  "generated_at": "2025-05-03T16:00:00Z",
+  "ttl_seconds": 300
+}</code></pre></div>
+      <p class="mt-3">Clients should call this before <em>POST</em>ing to avoid conflicts.</p>
+    </div>
+  </section>
+
+  <!-- Guidelines & Misc -->
+  <section class="section bg-white">
+    <div class="container" data-aos="fade-up">
+      <h2 class="mb-4">🔐 Security Guidelines</h2>
+      <ul>
+        <li>Use <code>self_proof</code> and <code>organization_proof</code> with verifiable signatures.</li>
+        <li>Avoid exposing sensitive URLs to unauthenticated clients.</li>
+        <li>Prefer HTTPS everywhere.</li>
+        <li>Rate‑limit <code>.well-known/calendario</code> endpoints.</li>
+      </ul>
+
+      <h2 class="mb-4 mt-5">🧠 Concurrency & Conflict Prevention</h2>
+      <ul>
+        <li>Calendario profiles represent declared availability, <em>not</em> real‑time truth.</li>
+        <li>Use <code>free_busy_url</code> to check conflicts before booking.</li>
+        <li>Enforce <code>min_notice_hours</code> and <code>max_bookings_per_day</code>.</li>
+        <li>Confirm bookings via <code>meeting_response_url</code> with atomic checks.</li>
+      </ul>
+
+      <h2 class="mb-4 mt-5">❌ Error Handling Guidelines</h2>
+      <ul>
+        <li>Clients must validate schemas and required fields.</li>
+        <li>Respect <code>visibility</code>, <code>payment_required</code>, and <code>blackouts</code>.</li>
+      </ul>
+
+      <h2 class="mb-4 mt-5">🔧 Extensibility</h2>
+      <p>Clients <strong>MUST</strong> ignore unknown top‑level fields. Arbitrary additions belong in <code>meta</code> or should start with <code>x‑</code>.</p>
+
+      <h2 class="mb-4 mt-5">🔁 Discovery</h2>
+      <p>Add this TXT record to DNS:</p>
+      <div class="code-block"><pre><code>calendario=/.well-known/calendario</code></pre></div>
+
+      <h2 class="mb-4 mt-5">📜 License</h2>
+      <p>Calendario Protocol is open‑source under the MIT License. Anyone can adopt, implement, or extend it.</p>
+
+      <h2 class="mb-4 mt-5">📎 Resources</h2>
+      <ul>
+        <li>📄 JSON Schema</li>
+        <li>📘 Profile Example</li>
+        <li>🧪 Validator Script</li>
+        <li>✅ Hosted Sample</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="mt-5 py-4 bg-light border-top">
+    <div class="container text-center">
+      <small class="text-muted">© 2025 Calendario Protocol — Spec v0.1</small>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>AOS.init({ duration: 700, once: true });</script>
+</body>
+</html>
+

@@ -1,0 +1,110 @@
+{
+  "version": "0.1",
+  "username": "jane",
+  "display_name": "Jane Doe",
+  "self": "did:key:xyz...",
+  "self_proof": {
+    "type": "DIDSignature2021",
+    "created": "2025-05-03T17:00:00Z",
+    "proofPurpose": "assertionMethod",
+    "verificationMethod": "did:key:xyz...",
+    "jws": "eyJhbGciOiJFUz..."
+  },
+
+  "organization": "https://acme.example.com",
+  "organization_proof": {
+    "type": "DIDSignature2021",
+    "created": "2025-05-03T18:00:00Z",
+    "proofPurpose": "assertionMethod",
+    "verificationMethod": "did:key:abc123...",
+    "jws": "eyJhbGciOiJFUz..."
+  },
+
+  "representing": "ceo@acme.example.com",
+  "representing_proof": {
+    "type": "DIDSignature2021",
+    "created": "2025-05-03T17:30:00Z",
+    "proofPurpose": "assertionMethod",
+    "verificationMethod": "did:key:xyz123...",
+    "jws": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9..."
+  },
+
+  "timezone": "America/New_York",
+  "visibility": "public",
+  "allow_anonymous_booking": false,
+
+  "min_notice_hours": 72,
+  "max_bookings_per_day": 3,
+  "blackouts": [
+    "2025-12-01",
+    { "start": "2025-12-24", "end": "2025-12-31" }
+  ],
+  "scheduling": [
+    {
+      "type": "weekly",
+      "days": ["monday", "wednesday", "friday"],
+      "hours": ["09:00-11:00", "16:00-18:00"],
+      "expires": "2025-06-30"
+    },
+    {
+      "type": "date",
+      "dates": ["2025-06-07", "2025-06-10"],
+      "hours": ["09:00-11:00"]
+    },
+    {
+      "type": "range",
+      "start": "2025-06-01",
+      "end": "2025-06-14",
+      "days": ["monday", "tuesday", "thursday"],
+      "hours": ["17:00-20:00"]
+    }
+  ],
+
+  "pricing": {
+    "hour": 75,
+    "half_hour": 45,
+    "currency": "USD"
+  },
+  "payment_required": true,
+  "payment_url": "https://yourdomain.com/pay/jane",
+
+  "no_show_policy_url": "https://yourdomain.com/no-show",
+  "terms_url": "https://yourdomain.com/terms",
+  "privacy_url": "https://yourdomain.com/privacy",
+
+  "response_channel": {
+    "human_ack_required": true,
+
+    "notify": [
+      {
+        "type": "email",
+        "value": "jane@example.com"
+      },
+      {
+        "type": "sms",
+        "value": "+14155551234"
+      },
+      {
+        "type": "push",
+        "value": "https://push.jane.dev/inbox"
+      },
+      {
+        "type": "webhook",
+        "value": "https://jane.dev/notify"
+      },
+      {
+        "type": "matrix_dm",
+        "value": "@jane:matrix.org"
+      }
+    ],
+
+    "confirm": {
+      "meeting_response_url": "https://yourdomain.com/api/bookings/jane",
+      "static_meeting_url": "https://meet.google.com/abc-defg-hij",
+      "free_busy_url": "https://yourdomain.com/api/freebusy/jane"
+    },
+
+    "booking_confirmation_message": "Thank you for booking with Jane. Please bring your brief and join the call 5 mins early.",
+    "booking_error_message": "Sorry, I'm no longer available at this time. Please propose another slot."
+  }
+}
